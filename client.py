@@ -6,6 +6,7 @@ port = 12345
 
 s.connect((ip_address, port))
 
+
 while True:
     msg = s.recv(1024)
     print(msg.decode("utf-8"))

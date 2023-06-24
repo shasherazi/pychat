@@ -9,8 +9,6 @@ c, addr = s.accept()
 print("Connection from: " + str(addr))
 
 
-
-
 while True:
     msg = input("Enter message: ")
     c.send(msg.encode("utf-8"))
