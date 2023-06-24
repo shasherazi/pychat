@@ -14,14 +14,14 @@ class Recive_Thread(Thread):
     def run(self):
         while True:
             msg = c.recv(1024)
-            print(msg.decode())
+            print(msg.decode("utf-8"))
             
             
 class Send_Thread(Thread):
     def run(self):
         while True:
                 msg = input("Enter message: ")
-                c.send(msg.encode())
+                c.send(msg.encode("utf-8"))
             
 
 t1 = Recive_Thread()
