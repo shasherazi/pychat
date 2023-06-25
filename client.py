@@ -7,27 +7,35 @@ port = 12345
 
 s.connect((ip_address, port))
 
-globalMsg = ""
+exitMsg = ""
 class Recive_Thread(Thread):
     def run(self):
         while True:
-            msg = s.recv(1024)
-            print(msg.decode("utf-8"))
-
-
-        
+            if exitMsg == "exit":
+                    break
+            else:
+                msg = s.recv(1024)
+                print(msg.decode("utf-8"))
+                
+                
 class Send_Thread(Thread):
     def run(self):
+        global exitMsg
         while True:
             msg = input("Enter message: ")
             s.send(msg.encode("utf-8"))
+            if msg == "exit":
+                exitMsg = msg
+                break
+        s.close()
+
                 
 t1 = Recive_Thread()
 t2 = Send_Thread()
 t1.start()
 t2.start()
 
-t1.join()
-t2.join()
+# t1.join()
+# t2.join()
 
-s.close()
+# s.close()

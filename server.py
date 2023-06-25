@@ -9,28 +9,37 @@ s.listen(5)
 c, addr = s.accept()
 print("Connection from: " + str(addr))
 
-globalMsg = ""
+exitMsg = ""
 class Recive_Thread(Thread):
     def run(self):
         while True:
-            msg = c.recv(1024)
-            print(msg.decode("utf-8"))
+            if exitMsg == "exit":
+                    break
+            else:
+                msg = c.recv(1024)
+                print(msg.decode("utf-8"))
+            
             
             
 class Send_Thread(Thread):
     def run(self):
+        global exitMsg
         while True:
                 msg = input("Enter message: ")
                 c.send(msg.encode("utf-8"))
-            
-
+                if msg == "exit":
+                    exitMsg = msg
+                    break
+        c.close()
+        
+        
 t1 = Recive_Thread()
 t2 = Send_Thread()
 t1.start()
 t2.start()
 
 
-t1.join()
-t2.join()
+# t1.join()
+# t2.join()
 
-c.close()
+# c.close()
